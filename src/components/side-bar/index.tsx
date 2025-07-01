@@ -12,6 +12,8 @@ import {
   // CreditCard,
   // Bell,
   LogOut,
+  PackageOpenIcon,
+  ShoppingBag,
 } from "lucide-react";
 
 interface SideBarProps{
@@ -27,9 +29,9 @@ const SideBar = ({setState, state}: SideBarProps) => {
         icon: User,
     },
     {
-        title: "Địa chỉ",
-        href: "addresses",
-        icon: MapPin,
+        title: "Giỏ hàng",
+        href: "cart",
+        icon: ShoppingBag,
     },
     {
         title: "Đơn hàng của tôi",
@@ -57,6 +59,8 @@ const SideBar = ({setState, state}: SideBarProps) => {
     //   icon: Bell,
     // },
     ];
+
+    console.log(state)
     
   return (
     <SideBarWrapper>
@@ -64,7 +68,10 @@ const SideBar = ({setState, state}: SideBarProps) => {
             {menuItems.map((item) => (
                 <div
                 key={item.href}
-                onClick={setState(state)}
+                onClick={(e)=>{
+                    e.preventDefault();
+                    setState(item.href)
+                }}
                 className={`
                     flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-gray-100",
                     pathname === item.href

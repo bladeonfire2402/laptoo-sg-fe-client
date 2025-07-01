@@ -44,7 +44,7 @@ export function BannerSection() {
   };
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-white mt-4">
       <div className="max-w-[1200px] mx-auto pt-4">
         <div className="md:col-span-2 lg:col-span-3 relative rounded-lg overflow-hidden">
             <div className="relative h-[300px] w-full">

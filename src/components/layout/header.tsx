@@ -4,7 +4,6 @@ import Link from "next/link";
 import { ShoppingCart, } from "lucide-react";
 import Image from "next/image";
 import { Container } from "../ui/container";
-import { useCartStore } from "@/lib/store/cart";
 import { useRouter } from "next/navigation";
 import SearchBar from "../search-bar";
 import { useContext, useMemo } from "react";
@@ -19,7 +18,7 @@ const profileMenuList: ProfileMenuItems[] = [
   },
   {
     title: "profile",
-    href: "/profile",
+    href: "/ca-nhan",
     type: "1",
   },
   {
@@ -36,9 +35,7 @@ const profileMenuList: ProfileMenuItems[] = [
 
 export default function Header() {
   const router = useRouter();
-  const totalItems = useCartStore((state) => state.totalItems);
-  const {user} = useContext(AppContext)
-
+  const {user, cart} = useContext(AppContext)
   const authMenuSection = useMemo(
     ()=> user ? <ProfileMenu profileMenuList={profileMenuList} />  : <AuthMenu/>,
   [user])
@@ -51,12 +48,12 @@ export default function Header() {
       >
         <ShoppingCart className="h-6 w-6" />
         <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-yellow-500 text-xs text-white">
-          {totalItems || 0}
+          {cart?.length}
         </span>
       </button>
     )
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  },[cart])
 
   return (
     <Container className="fixed top-0 left-0 right-0 z-50 w-full flex justify-center bg-black ">

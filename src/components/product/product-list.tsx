@@ -26,7 +26,8 @@ export function ProductList() {
     }
   };
 
-  const setWatched  = (productId: any) => {
+  const setWatched  = (productId: any, e: any) => {
+    e.preventDefault()
     //Khởi tạo watched
     const watchedStorage = localStorage.getItem("watched")
     if(!watchedStorage){localStorage.setItem('watched',JSON.stringify([]))}
@@ -68,7 +69,7 @@ export function ProductList() {
     <div className="space-y-8">
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
         {productList.map((product) => (
-          <ProductCard key={product.id} product={product} onClick={setWatched(product.slug)} />
+          <ProductCard key={product.id} product={product} onClick={(e)=>{setWatched(product.slug,e)}} />
         ))}
       </div>
     </div>

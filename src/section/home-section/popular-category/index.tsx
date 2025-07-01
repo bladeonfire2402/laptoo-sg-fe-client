@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import React, { useEffect, useState } from 'react'
 import { PopularCategoryContent, PopularCategoryWrapper } from './styled'
 import { categoryApi } from '@/utils/category-api';
@@ -23,7 +24,7 @@ const PopularCategorySection = () => {
     },[])
   return (
     <PopularCategoryWrapper>
-        <PopularCategoryContent className='bg-slate-50'>
+        <PopularCategoryContent className='bg-slate-50 rounded-md'>
           <h1 className='text-center text-[24px] font-semibold'>Danh mục nổi bật</h1>
           <p className='text-center text-[16px] text-gray-600 mt-2'>Khám phá những dòng thương hiệu nổi bật của chúng tôi</p>
           <div className='flex items-center  justify-between mt-7'>

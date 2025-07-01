@@ -13,7 +13,14 @@ const WatchedSection = () => {
     try {
       const res = await productApi.getProductBySlug(slug);
       // Assuming the response is the product data, we add it to the watched state
-      setWatched((prevWatched: any) => [...prevWatched, res.data]);
+      setWatched((prevWatched: any) => {
+        // Check if the product already exists in the watched state by slug
+        if (!prevWatched.some((product: any) => product.slug === res.data.slug)) {
+          return [...prevWatched, res.data];  // Add product if not found
+        }
+        return prevWatched;  // Return prevWatched if product already exists
+      });
+
     } catch (e: any) {
       console.log(e.message);
     }

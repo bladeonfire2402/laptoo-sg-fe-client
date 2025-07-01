@@ -2,7 +2,7 @@ import {styled} from 'styled-components';
 
 export const ProductDetailWrapper = styled.div`
   gap: 20px;
-  padding: 20px 20px;
+  padding: 60px 20px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -14,7 +14,7 @@ export const ProductDetailContent = styled.div`
  gap: 20px;
  width: 100%;
  display: flex;
- max-width: 1200px;
+ max-width: 1300px;
 `;
 
 export const OtherProductSection = styled.div`
@@ -41,7 +41,7 @@ export const ProductContent = styled.section`
   background-color: white;
 
   span {
-    font-size: 14px;
+    font-size: 14px !important;
   }
 `;
 
@@ -64,16 +64,17 @@ export const ShopSection = styled.section`
  background-color: white;
 `;
 
-export const WarrantySection = styled.section``;
+export const WarrantySection = styled.section`
+`;
 
 export const SubDetailSection =styled.section``;
 
 export const VariantSelection = styled.div`
  gap: 10px;
+ width: 100%;
  display: flex;
  flex-wrap: wrap;
  margin-top: 10px;
- max-width: 250px;
  margin-bottom: 10px;
  align-items: center;
 `;

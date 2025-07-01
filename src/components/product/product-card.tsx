@@ -10,7 +10,7 @@ import { formatPrice } from "@/lib/utils";
 
 export function ProductCard({ product, onClick }: any) {
   //giá tiền sản phẩm sau khi giảm giá
-  const discountedPrice = product.minPrice * (1 - product.maxDiscount / 100);
+  //const discountedPrice = product.minPrice * (1 - product.maxDiscount / 100);
 
   return (
     <Card className="group overflow-hidden transition-all hover:border-blue-600" onClick={()=> onClick}>
@@ -28,27 +28,14 @@ export function ProductCard({ product, onClick }: any) {
             priority={false}
           />
         </div>
-        <div className="p-4">
+        <div className="px-4 py-4">
           <h3 className="text-sm font-medium line-clamp-2 group-hover:text-blue-600">
             {product.name}
           </h3>
-          <div className="mt-2">
-            <span className="text-lg font-bold text-blue-600">
-              {formatPrice(discountedPrice)}
-            </span>
-            {product.maxDiscount > 0 && (
-              <>
-                <span className="ml-2 text-sm text-gray-500 line-through">
-                  {formatPrice(product.minPrice)}
-                </span>
-                <span className="ml-2 text-sm text-red-500">
-                  -{product.maxDiscount}%
-                </span>
-              </>
-            )}
-          </div>
           <div className="mt-2 flex items-center justify-between text-sm text-gray-500">
-            {product.soldCount > 0 && <span>Đã bán {product.soldCount}</span>}
+             <span className="text-lg font-bold text-blue-600">
+              {product.minPrice ? formatPrice(product.minPrice) : ''}
+            </span>
             <div className="flex items-center gap-1">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
               <span>{product.rating}</span>

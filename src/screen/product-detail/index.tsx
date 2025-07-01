@@ -3,29 +3,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React from 'react'
+import React, { useContext } from 'react'
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { productApi } from "@/utils/productApi";
 import { HomeIcon, Loader2, ShoppingBagIcon, ShoppingCart, Star } from "lucide-react";
 import { DetailSection, HeadlineProduct, OtherProductSection, ProductContent, ProductDetailContent, ProductDetailWrapper, ShopSection, VariantSelection, WarrantySection } from './styled';
 import CustomButton from '@/components/custom-button';
 import { formatCurrency } from '@/utils/format-value';
 import Policies from '@/components/policy-card';
-import CustomSwipper from '@/components/custom-swipper';
-import useWindowResize from '@/hooks/use-window-resize';
-
-
+import { AppContext } from '@/context';
+import { toast } from 'sonner';  // Import toast từ sonner
 
 const ProductDetailScreen = () => {
   const { slug } = useParams();
   const [product, setProduct] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [pageloading, setPageLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [onFocusImg, setOnFocusImg] = useState<number>(0);
   const [onVariant, setOnVariant] = useState<number>(0);
   const [productImgs, setProductImg] = useState<string[]>([])
-  const size: any = useWindowResize()
+  const {loading, setLoading} = useContext(AppContext);
+  const router = useRouter()
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -35,7 +34,7 @@ const ProductDetailScreen = () => {
       } catch (err: any) {
         setError(err.message || "Something went wrong");
       } finally {
-        setLoading(false);
+        setPageLoading(false);
       }
     };
 
@@ -48,9 +47,9 @@ const ProductDetailScreen = () => {
     }
   },[product])
 
-  if (loading) {
+  if (pageloading) {
     return (
-      <div className="flex justify-center py-10">
+      <div className="flex justify-center py-10 items-center mt-[100px]">
         <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
       </div>
     );
@@ -102,8 +101,35 @@ const ProductDetailScreen = () => {
     },
   ]
 
+const handleAddToCart = (variantId, price, name) => {
+  // Lấy cart từ localStorage
+  let cart = localStorage.getItem('cart');
+  
+  // Nếu cart tồn tại, parse nó, nếu không thì khởi tạo mảng rỗng
+  cart = cart ? JSON.parse(cart) : [];
 
-const handleRatingStar = (point: number) => {
+  // Kiểm tra xem có sản phẩm nào trong cart có variantId giống với variantId truyền vào không
+  const isIn = cart.find((ci: any) => ci.variantId === variantId);
+
+  if (isIn) {
+    // Nếu sản phẩm đã có trong cart, update quantity lên 1
+    isIn.quantity += 1;
+  } else {
+    // Nếu không có, thêm sản phẩm mới vào cart với quantity = 1
+    cart.push({ variantId, quantity: 1, price , name });
+  }
+
+  // Cập nhật lại cart vào localStorage
+  localStorage.setItem('cart', JSON.stringify(cart));
+
+  // Thông báo thành công bằng sonner
+  toast.success('Sản phẩm đã được thêm vào giỏ hàng!');
+  setLoading(!loading)
+};
+
+
+
+  const handleRatingStar = (point: number) => {
   const stars = [];
   const filled = Math.max(0, Math.min(5, Math.round(point)));
 
@@ -120,7 +146,7 @@ const handleRatingStar = (point: number) => {
   return (
     <ProductDetailWrapper>
         <HeadlineProduct>
-            <span className="hover:underline cursor-pointer">{<HomeIcon fontSize={12}/>}</span> &gt;{" "}
+            <span className="hover:underline cursor-pointer">{<HomeIcon size={16} onClick={()=>router.push('/')} />}</span> &gt;{" "}
             <span className="hover:underline cursor-pointer">{product.categoryName}</span> &gt;{" "}
             <span className="text-gray-800 font-medium">{product.name}</span>
         </HeadlineProduct>
@@ -132,8 +158,8 @@ const handleRatingStar = (point: number) => {
                   <div className='flex items-center mt-[10px] gap-[10px]'>
                     {productImgs.map((_img: any,index: number)=>(
                       <div key={index} 
-                      className={`rounded-md p-[2px] border-2 border-transparent ${onFocusImg == index ? 'border-yellow-400' : ''}`}
-                      onClick={()=>setOnFocusImg(index)}
+                        className={`rounded-md p-[2px] border-2 border-transparent ${onFocusImg == index ? 'border-yellow-400' : ''}`}
+                        onClick={()=>setOnFocusImg(index)}
                       >
                         <img src={_img.image} className='h-[50px] w-[50px] object-fill rounded-md' />
                       </div>
@@ -154,11 +180,11 @@ const handleRatingStar = (point: number) => {
                     <span> |</span>
                     <span className='flex items-center gap-2'>{handleRatingStar(product.rating)}</span>
                    </div>
-                   <h2 className='text-yellow-600 text-[28px] font-bold mt-2'>{formatCurrency(product.variants[onVariant].price)}</h2>
+                   <h2 className='text-yellow-600 text-[28px] font-bold mt-[14px]'>{formatCurrency(product.variants[onVariant].price)}</h2>
                    <VariantSelection>
                     {product.variants.map((v: any, i: number)=>(
                       <div key={i} 
-                      className={`px-2 py-2 rounded-md flex gap-3 border-2 border-transparent ${i == onVariant && 'border-yellow-400'}`}>
+                      className={`px-2 py-2 items-center rounded-md max-w-[300px] flex gap-3 border-2 border-transparent ${i == onVariant && 'border-yellow-400'}`}>
                         <img src={product?.thumbnail} 
                         alt={product.name} className='rounded-[10px] object-fill w-[80px] h-[80px]'
                         onClick={()=>[setOnVariant(i)]}/>
@@ -172,9 +198,13 @@ const handleRatingStar = (point: number) => {
                    </VariantSelection>
                    <div className='flex items-center gap-2 mt-3 pr-10'>
                       <CustomButton text='Mua ngay'
+                      onClick={()=>{}}
                       Icon={<ShoppingBagIcon size={14}/>}  
                       classname='rounded-md bg-yellow-500 py-5' version={0} textCn='text-[20px]'/>
+
                       <CustomButton text='Thêm vào giỏ hàng' 
+                      onClick={()=>
+                        handleAddToCart(product.variants[onVariant].id, product.variants[onVariant].price, product.name)}
                       Icon={<ShoppingCart size={14} color='text-white'/>}
                       classname='rounded-md bg-gray-800 px-3 py-5 text-black ' version={0} textCn='text-white text-lg'  />
                    </div>
@@ -193,7 +223,7 @@ const handleRatingStar = (point: number) => {
               <DetailSection>
                 <h1 className='font-semibold text-[18px]'>Thông tin chi tiết</h1>
                 {tableProductDetail.map((config:any, i:number)=>(
-                  <div className={`grid gap-2 px-2 py-2 grid-cols-2 rounded-md ${config.isPrimary && "bg-slate-300"}`} key={i}>
+                  <div className={`grid gap-2 px-2 py-2 grid-cols-2 items-center rounded-md text-[14px] ${config.isPrimary && "bg-slate-300"}`} key={i}>
                     <p className='font-semibold capitalize'>{config.title}</p>
                     <p className='text-gray-600'>{product[config.key]}</p>
                   </div>

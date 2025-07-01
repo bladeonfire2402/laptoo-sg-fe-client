@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Search } from "lucide-react";
 
-
 const SearchBar = () => {
     const router = useRouter(); // tối sửa
     const [keyword, setKeyWord] = useState<string>("");
@@ -24,8 +23,8 @@ const SearchBar = () => {
                     <Input
                       onChange={(e) => setKeyWord(e.target.value)}
                       type="search"
-                      placeholder="Search for products..."
-                      className="w-full rounded-full border-2 text-white border-[#ffd500] pl-4 pr-12 focus:border-[#ffd500]"
+                      placeholder="  Search for products..."
+                      className="w-full rounded-full text-white border border-[#ffd500] pl-4 pr-12 focus:border-[#ffd500]"
                     />
                     <Button
                       type="submit"

@@ -13,6 +13,8 @@ export const AppContext = createContext<{
   product?: any;
   setProduct?: any;
   userInitialized?: boolean;
+  cart?: [];
+  setCart?: any;
 }>({
   loading: false,
 });
@@ -23,9 +25,12 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<any>()
   const [product, setProduct] = useState<any>([]);
   const [userInitialized, setUserInitialized] = useState(false);
+  const [cart, setCart] = useState<any>([]);
 
   useEffect(() => {
     const rawUser = localStorage.getItem("user");
+    const rawCart = localStorage.getItem('cart');
+
     if (rawUser) {
       try {
         setUser(JSON.parse(rawUser));
@@ -36,8 +41,19 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
       setUser(null);
     }
 
+    if(!rawCart){
+      localStorage.setItem('cart',JSON.stringify([]))
+      setCart([])
+    }
+    
     setUserInitialized(true); // <== QUAN TRỌNG
   }, []);
+
+  useEffect(()=>{
+    const rawCart = localStorage.getItem('cart');
+    setCart(JSON.parse(rawCart))
+  },[loading])
+
 
   return (
     <AppContext.Provider
@@ -50,7 +66,8 @@ export const ClientProvider = ({ children }: { children: ReactNode }) => {
         setUser,
         product,
         setProduct,
-        userInitialized
+        userInitialized,
+        cart, setCart,
       }}
     >
       {children}

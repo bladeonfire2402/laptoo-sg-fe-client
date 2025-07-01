@@ -1,10 +1,10 @@
 import { FaShippingFast, FaShieldAlt, FaExchangeAlt, FaWrench } from 'react-icons/fa';
 
 const PolicyCard = ({ title, description, icon }) => (
-  <div className="flex items-center gap-3 space-x-3 p-4 border-b">
+  <div className="flex items-center gap-3 space-x-3 px-2 py-2 border-b">
     <div className="text-[20px]">{icon}</div>
     <div>
-      <h3 className="font-semibold text-[16px]">{title}</h3>
+      <h3 className="font-semibold text-[14px]">{title}</h3>
       <p className="text-sm text-gray-500">{description}</p>
     </div>
   </div>
@@ -13,7 +13,7 @@ const PolicyCard = ({ title, description, icon }) => (
 const Policies = () => {
   const size= 20;
   return (
-    <div className="max-w-md mx-auto p-4 bg-white rounded-lg">
+    <div className="max-w-md mx-auto bg-white rounded-lg py-4 px-4">
       <div className="text-lg font-semibold mb-4">Chính sách bán hàng</div>
       <PolicyCard
         title="Miễn phí giao hàng cho đơn hàng từ 5 triệu"

@@ -39,7 +39,7 @@ const footerLinks = {
 export function Footer() {
   return (
     <Container className="">
-      <footer className="mt-12 border-t w-full  bg-black">
+      <footer className="border-t w-full  bg-black">
         <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
             <div>
