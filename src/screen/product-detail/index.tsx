@@ -205,7 +205,7 @@ const handleAddToCart = (variantId, price, name) => {
                       <CustomButton text='Thêm vào giỏ hàng' 
                       onClick={()=>
                         handleAddToCart(product.variants[onVariant].id, product.variants[onVariant].price, product.name)}
-                      Icon={<ShoppingCart size={14} color='text-white'/>}
+                      Icon={<ShoppingCart size={14} color='#fff'/>}
                       classname='rounded-md bg-gray-800 px-3 py-5 text-black ' version={0} textCn='text-white text-lg'  />
                    </div>
                 </div>

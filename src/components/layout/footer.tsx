@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Container } from "../ui/container";
+import { ShoppingBag } from "lucide-react";
 
 const footerLinks = {
   customerService: [
@@ -38,8 +39,8 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <Container className="">
-      <footer className="border-t w-full  bg-black">
+    <Container className="flex justify-center bg-black">
+      <footer className="border-t w-full  max-w-[1200px]">
         <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
             <div>
@@ -62,7 +63,7 @@ export function Footer() {
 
             <div>
               <h3 className="mb-4 text-sm font-semibold uppercase text-gray-600">
-                VỀ TOXOS
+                VỀ LaptopSG
               </h3>
               <ul className="space-y-2">
                 {footerLinks.about.map((link) => (
@@ -110,43 +111,18 @@ export function Footer() {
                     key={icon}
                     className="flex h-10 w-16 items-center justify-center rounded border bg-white p-2"
                   >
-                    <Image
-                      src={`/logistics/${icon}`}
-                      alt={icon.replace(".png", "")}
-                      width={40}
-                      height={24}
-                      className="h-auto w-full object-contain"
-                    />
+                    <ShoppingBag/>
                   </div>
                 ))}
               </div>
             </div>
-            <div>
+            <div className="flex flex-col gap-2">
               <h3 className="mb-4 text-sm font-semibold uppercase text-gray-600">
                 THỬ NGAY CURXOR TRACKING
               </h3>
-              <div className="flex items-start space-x-4">
-                <div className="w-24">
-                  <Image
-                    src="/qrcode.png"
-                    alt="QR Code"
-                    width={96}
-                    height={96}
-                    className="rounded border"
-                    priority
-                  />
-                </div>
-                <div className="flex flex-col space-y-2">
-                  <Link href="https://curxor-tracking.netlify.app/">
-                    <Image
-                      src="/app-store.png"
-                      alt="Download App"
-                      width={120}
-                      height={40}
-                      className="h-10 w-auto"
-                      priority
-                    />
-                  </Link>
+              <div className="flex items-start">
+                <div className="w-24 px-2 py-2 bg-white rounded-md ">
+                  <img src={`/images/logo_sg.png`} alt="laptopSG" className="w-[70px]"/>
                 </div>
               </div>
             </div>
