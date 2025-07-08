@@ -101,7 +101,7 @@ const ProductDetailScreen = () => {
     },
   ]
 
-const handleAddToCart = (variantId, price, name) => {
+const handleAddToCart = (variantId, price, name, img) => {
   // Lấy cart từ localStorage
   let cart = localStorage.getItem('cart');
   
@@ -109,14 +109,14 @@ const handleAddToCart = (variantId, price, name) => {
   cart = cart ? JSON.parse(cart) : [];
 
   // Kiểm tra xem có sản phẩm nào trong cart có variantId giống với variantId truyền vào không
-  const isIn = cart.find((ci: any) => ci.variantId === variantId);
+  const isIn = cart?.find((ci: any) => ci.variantId === variantId);
 
   if (isIn) {
     // Nếu sản phẩm đã có trong cart, update quantity lên 1
     isIn.quantity += 1;
   } else {
     // Nếu không có, thêm sản phẩm mới vào cart với quantity = 1
-    cart.push({ variantId, quantity: 1, price , name });
+    cart?.push({ variantId, quantity: 1, price , name, img });
   }
 
   // Cập nhật lại cart vào localStorage
@@ -204,7 +204,7 @@ const handleAddToCart = (variantId, price, name) => {
 
                       <CustomButton text='Thêm vào giỏ hàng' 
                       onClick={()=>
-                        handleAddToCart(product.variants[onVariant].id, product.variants[onVariant].price, product.name)}
+                        handleAddToCart(product.variants[onVariant].id, product.variants[onVariant].price, product.name,product.thumbnail)}
                       Icon={<ShoppingCart size={14} color='#fff'/>}
                       classname='rounded-md bg-gray-800 px-3 py-5 text-black ' version={0} textCn='text-white text-lg'  />
                    </div>

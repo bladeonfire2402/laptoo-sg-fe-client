@@ -96,7 +96,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <Container className="py-10 flex justify-center items-center">
+    <Container className="py-[100px] flex justify-center items-center ">
       <div className="grid grid-cols-4 gap-6 w-full max-w-[1200px]">
         <div className="space-y-4">
           <ProductFilters

@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useContext, useEffect, useState } from 'react';
-import { ProfileScreenContent, ProfileScreenWrapper } from './styled';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";

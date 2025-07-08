@@ -1,0 +1,16 @@
+.auth-menu-wrapper{
+    
+}
+
+.auth-menu-wrapper svg{
+    color: white;
+}
+
+.auth-menu-wrapper p {
+    cursor: pointer;
+}
+
+.auth-menu-wrapper:hover p, .auth-menu-wrapper svg{
+    stroke: #ffd500;
+    color: #ffd500;
+}

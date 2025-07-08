@@ -2,19 +2,17 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react'
-import { SideBarContent, SideBarWrapper } from './styled'
 import {
   User,
-  MapPin,
   Package,
   // Ticket,
   Gift,
   // CreditCard,
   // Bell,
   LogOut,
-  PackageOpenIcon,
   ShoppingBag,
 } from "lucide-react";
+import { useRouter } from 'next/navigation';
 
 interface SideBarProps{
     setState?:any;
@@ -22,6 +20,7 @@ interface SideBarProps{
 }
 
 const SideBar = ({setState, state}: SideBarProps) => {
+    const router = useRouter()
     const menuItems = [
     {
         title: "Thông tin tài khoản",
@@ -30,7 +29,7 @@ const SideBar = ({setState, state}: SideBarProps) => {
     },
     {
         title: "Giỏ hàng",
-        href: "cart",
+        href: "carts",
         icon: ShoppingBag,
     },
     {
@@ -59,21 +58,20 @@ const SideBar = ({setState, state}: SideBarProps) => {
     //   icon: Bell,
     // },
     ];
-
-    console.log(state)
     
   return (
-    <SideBarWrapper>
-        <SideBarContent>
+    <div className='w-1/4 px-[20px] py-[10px] rounded-[10px] bg-slate-50 cursor-pointer'>
+        <div>
             {menuItems.map((item) => (
                 <div
                 key={item.href}
                 onClick={(e)=>{
                     e.preventDefault();
-                    setState(item.href)
+                    setState(item.href);
+                    router.replace(`/ca-nhan?section=${item.href}`)
                 }}
                 className={`
-                    flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-gray-100",
+                    flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all hover:bg-white",
                     pathname === item.href
                     ? "bg-blue-50 text-yellow-600 font-medium"
                     : "text-gray-600"
@@ -87,9 +85,9 @@ const SideBar = ({setState, state}: SideBarProps) => {
                 <LogOut className="h-4 w-4" />
                 Đăng xuất
             </button>   
-        </SideBarContent>
+        </div>
 
-    </SideBarWrapper>
+    </div>
   )
 }
 

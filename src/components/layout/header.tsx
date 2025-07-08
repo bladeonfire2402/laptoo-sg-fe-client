@@ -1,49 +1,39 @@
 "use client";
 
 import Link from "next/link";
-import { ShoppingCart, } from "lucide-react";
+import { Bell, ShoppingCart, } from "lucide-react";
 import Image from "next/image";
 import { Container } from "../ui/container";
 import { useRouter } from "next/navigation";
 import SearchBar from "../search-bar";
 import { useContext, useMemo } from "react";
-import ProfileMenu, { ProfileMenuItems } from "../profile-menu";
 import AuthMenu from "../auth-menu";
 import { AppContext } from "@/context";
 
 
-const profileMenuList: ProfileMenuItems[] = [
-  {
-    type: "0",
-  },
-  {
-    title: "profile",
-    href: "/ca-nhan",
-    type: "1",
-  },
-  {
-    title:"order",
-    href: "/profile/orders",
-    type: "1",
-  },
-  {
-    title:"log out",
-    type: "2",
-    onClick: () => {},
-  }
-]
+//Lấy ra kí tự cuối của tên người dùng
+const handelUserIcon = (name: string) => {
+  const ar = name.split(' ');
+  const lastChar = ar[ar.length - 1].charAt(0).toUpperCase();
+  return lastChar;
+}
 
 export default function Header() {
   const router = useRouter();
   const {user, cart} = useContext(AppContext)
+  
   const authMenuSection = useMemo(
-    ()=> user ? <ProfileMenu profileMenuList={profileMenuList} />  : <AuthMenu/>,
+    ()=> user ? <div className="rounded-[30px] bg-[#ffd500] h-[30px] w-[30px] justify-center flex items-center gap-2 "
+    onClick={()=>router.push('/ca-nhan')}
+    >
+      <p className="font-bold text-white cursor-pointer">{handelUserIcon(user.fullName)}</p>
+    </div>  : <AuthMenu/>,
   [user])
 
   const cartMenuSection = useMemo(()=>{
     return(
       <button
-        onClick={() => router.push("/cart")}
+        onClick={() => router.push("/ca-nhan?section=carts")}
         className="relative flex items-center  text-sm text-gray-100 hover:text-yellow-500"
       >
         <ShoppingCart className="h-6 w-6" />
@@ -64,9 +54,10 @@ export default function Header() {
              <Image src={`/images/logo_sg.png`} width={200} height={200} alt="LaptopSG"/>
             </Link>
             <SearchBar/>
-            <div className="flex items-center space-x-6">
-              {authMenuSection}
+            <div className="flex items-center space-x-6 gap-2">
+              <Bell size={25} color="white"/>
               {cartMenuSection}
+              {authMenuSection}
             </div>
           </div>
         </div>

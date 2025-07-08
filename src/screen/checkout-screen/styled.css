@@ -1,0 +1,15 @@
+.CheckoutScreenWrapper input {
+   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.CheckoutScreenWrapper input:focus{
+   box-shadow: rgba(136, 159, 0, 0.16) 0px 1px 4px;
+}
+
+.CheckoutScreenWrapper select{
+   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.CheckoutScreenWrapper svg{
+    stroke: rgb(255 213 0 / var(--tw-bg-opacity, 1));
+}

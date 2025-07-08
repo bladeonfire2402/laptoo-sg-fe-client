@@ -45,6 +45,7 @@ const RegisterScreen = () => {
       const response = await axios.post(`${baseURL}/api/auth/register`, resInfo);
       // Nếu backend trả JWT và user info, có thể lưu lại hoặc điều hướng
       setUser(response.data)
+      localStorage.setItem('token',response.data.token)
       router.push("/auth/login");
     } catch (err: any) {
       const message =

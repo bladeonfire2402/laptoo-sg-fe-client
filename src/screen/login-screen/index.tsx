@@ -33,7 +33,7 @@ const LoginScreen = () => {
       });
 
       // ✅ Lưu token vào localStorage
-      localStorage.setItem("access_token", response.data.token);
+      localStorage.setItem("token", response.data.token);
       localStorage.setItem("user",JSON.stringify(response.data.user))
       setUser(response.data?.user)
 

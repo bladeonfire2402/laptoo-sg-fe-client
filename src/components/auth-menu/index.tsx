@@ -1,16 +1,19 @@
 import React from 'react'
-import { AuthMenuWrapper } from './styled'
 import { useRouter } from 'next/navigation';
-import CustomButton from '../custom-button';
-import { User, UserCircle2 } from 'lucide-react';
+import { UserCircle2 } from 'lucide-react';
+import './styled.css'
 
 const AuthMenu = () => {
   const router = useRouter();
   return (
-    <AuthMenuWrapper>
-      <CustomButton text='Login' version={0} onClick={()=>router.push('/auth/login')} Icon={<User size={14}/>}/>
-      <CustomButton text='Register' version={0} onClick={()=>router.push('/auth/register')} Icon={<UserCircle2 size={14}/>} />
-    </AuthMenuWrapper>
+    <div className='flex w-[100px]  gap-2 items-center cusor-pointer auth-menu-wrapper' 
+    onClick={()=>{router.push('/auth/register')}}>
+      <UserCircle2 size={30} color='white'/>
+      <div className='text-white text-[12px]'>
+        <p className='cusor-pointer'>Đăng kí</p>
+        <p className='cusor-pointer'>Đăng nhập</p>
+      </div>
+    </div>
   )
 }
 
