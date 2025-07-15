@@ -5,9 +5,12 @@ import React, { useEffect, useState } from 'react'
 import { PopularCategoryContent, PopularCategoryWrapper } from './styled'
 import { categoryApi } from '@/utils/category-api';
 import { Laptop } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+
 
 const PopularCategorySection = () => {
     const [categoryList,setCateogryList] = useState<any>([])
+    const router = useRouter()
 
     const fetchCategoryList = async () => {
       try{
@@ -29,7 +32,9 @@ const PopularCategorySection = () => {
           <p className='text-center text-[16px] text-gray-600 mt-2'>Khám phá những dòng thương hiệu nổi bật của chúng tôi</p>
           <div className='flex items-center  justify-between mt-7'>
             {categoryList?.map((cate: any, i: number)=>(
-              <div className='px-6 py-4 rounded-md w-[100px] bg-slate-200 flex flex-col items-center gap-2' key={i} >
+              <div className='px-6 py-4 rounded-md w-[100px] bg-slate-200 flex flex-col items-center gap-2' key={i}
+              onClick={()=>{router.push(`/ban-hang?category=${cate.id}`)}}
+               >
                 <Laptop size={40}/>
                 <p>{cate.name}</p>
               </div>

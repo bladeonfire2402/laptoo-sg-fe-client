@@ -21,21 +21,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AppContext } from '@/context';
+import './styled.css'
 
 const profileFormSchema = z.object({
   fullName: z
     .string()
     .min(2, "Họ tên phải có ít nhất 2 ký tự")
     .max(50, "Họ tên không được vượt quá 50 ký tự"),
-  email: z.string().email("Email không hợp lệ"),
+  address: z.string(),
   phone: z
     .string()
     .regex(/^(\+84|0)[0-9]{9,10}$/, "Số điện thoại không hợp lệ"),
   gender: z.enum(["male", "female", "other"]),
-  birthday: z.string(),
 });
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
@@ -46,10 +45,9 @@ const ProfileScreen = () => {
   // Step 1: Initialize state for default form values (using empty placeholders initially)
   const [defaultValues, setDefaultValues] = useState<ProfileFormValues>({
     fullName: '',
-    email: '',
     phone: '',
     gender: 'male',
-    birthday: '',
+    address: ''
   });
 
   const form = useForm<ProfileFormValues>({
@@ -62,18 +60,26 @@ const ProfileScreen = () => {
     if (user) {
       setDefaultValues({
         fullName: user.fullName || '',
-        email: user.email || '',
         phone: user.phone || '',
         gender: user.gender || 'male',
-        birthday: user.birthday || '',
+        address: user.address 
       });
       
-      form.setValue("phone", user.phone || ""); // Ensure form is updated
+      form.setValue("phone", user.phone || "");
+      form.setValue("fullName", user.fullName || "");
+      form.setValue("address", user.address || "");
+      form.setValue("gender", user.gender || "male");// Ensure form is updated
     }
   }, [user, form]);
 
-  const onSubmit = (data: ProfileFormValues) => {
+  const onSubmit = async(data: ProfileFormValues) => {
     console.log(data);
+    try{
+      // hàm update
+    }
+    catch(e){
+      console.log(e)
+    }
   };
 
   // Step 3: Render the component after client-side mount
@@ -82,14 +88,14 @@ const ProfileScreen = () => {
   }
 
   return (
-    <div>
+    <div className='profile-screen-wrapper'>
       <Card className='px-5 py-5'>
         <CardHeader>
           <CardTitle>Hồ Sơ Của Tôi</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="md:w-3/4">
+        <CardContent className='flex'>
+          <div className="flex flex-col md:flex-row gap-8 w-7/12">
+            <div className="">
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                   <FormField
@@ -108,12 +114,12 @@ const ProfileScreen = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <FormField
                       control={form.control}
-                      name="email"
+                      name="address"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel>Địa chỉ</FormLabel>
                           <FormControl>
-                            <Input placeholder="example@gmail.com" {...field} type="email" className='text-black'/>
+                            <Input placeholder="66/1 Nguyễn Tuyển, Tp Hồ Chí Minh" {...field} type="text" className='text-black'/>
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -160,43 +166,21 @@ const ProfileScreen = () => {
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      control={form.control}
-                      name="birthday"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Ngày sinh</FormLabel>
-                          <FormControl>
-                            <Input type="date" {...field} className='text-black'/>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                   </div>
 
-                  <Button type="submit">Lưu thay đổi</Button>
+                  <Button type="submit" className='hover:bg-yellow-500 hover:text-white'>Lưu thay đổi</Button>
                 </form>
               </Form>
             </div>
 
-            <div className="md:w-1/4 flex flex-col items-center space-y-4">
-              <Avatar className="h-32 w-32">
-                <AvatarImage src={user?.avatarUrl || "/placeholder-avatar.jpg"} alt="Avatar" />
-                <AvatarFallback>NA</AvatarFallback>
-              </Avatar>
-              <Button variant="outline" size="sm">
-                Chọn ảnh
-              </Button>
-              <p className="text-sm text-gray-500 text-center">
-                Dụng lượng file tối đa 1 MB
-                <br />
-                Định dạng: .JPEG, .PNG
-              </p>
-            </div>
+            
+          </div>
+          <div className='flex items-center w-6/12 justify-center'>
+            <img src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS671hX9LXk6ykl_P5vZzeGBUhKASSFzuD_1w&s'}/>
           </div>
         </CardContent>
       </Card>
+      
     </div>
   );
 };

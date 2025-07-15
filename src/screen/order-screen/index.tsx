@@ -97,7 +97,7 @@ const OrderScreen = () => {
                   <div>{handlePaymentType(order.paymentType)}</div>
                 </div>
             ))}
-           <Modal isShow={modal.isShow} fetchId={modal.fetchId}   setIsShow={(value) => setModal(prev => ({ ...prev, isShow: value }))}/>
+           <Modal isShow={modal.isShow} fetchId={modal.fetchId}   setIsShow={(value: any) => setModal(prev => ({ ...prev, isShow: value }))}/>
         </div>
        )}
      </div>

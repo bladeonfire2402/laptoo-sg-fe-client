@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { orderApi } from '@/utils/order-api';
 import React, { useEffect, useState } from 'react'
 import './styled.css'
@@ -100,8 +101,6 @@ const Modal = ({isShow,fetchId, setIsShow}: ModalProps) => {
             classname='rounded-md bg-yellow-600 py-5' Icon={<LogOut size={14} color='white'/>} version={0}
             onClick={() => setIsShow?.(false)}/>
         </div>
-
-       
     </div>
   )
 }

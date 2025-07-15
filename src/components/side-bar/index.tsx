@@ -42,11 +42,11 @@ const SideBar = ({setState, state}: SideBarProps) => {
     //   href: "/profile/vouchers",
     //   icon: Ticket,
     // },
-    {
-        title: "Xu của tôi",
-        href: "cashback",
-        icon: Gift,
-    },
+    // {
+    //     title: "Xu của tôi",
+    //     href: "cashback",
+    //     icon: Gift,
+    // },
     // {
     //   title: "Thẻ thanh toán",
     //   href: "/profile/payment",
@@ -60,7 +60,7 @@ const SideBar = ({setState, state}: SideBarProps) => {
     ];
     
   return (
-    <div className='w-1/4 px-[20px] py-[10px] rounded-[10px] bg-slate-50 cursor-pointer'>
+    <div className='w-1/4 px-[20px] py-[10px] rounded-[10px] bg-slate-50 cursor-pointer h-fit'>
         <div>
             {menuItems.map((item) => (
                 <div

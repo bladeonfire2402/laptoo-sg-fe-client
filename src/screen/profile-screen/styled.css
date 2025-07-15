@@ -1,0 +1,12 @@
+.profile-screen-wrapper{
+    width: 100%;
+    min-width: 600px;
+}
+
+.profile-screen-wrapper input{
+    border: 0.4px solid gray;
+}
+
+.profile-screen-wrapper button{
+    border: 1px solid gray;
+}
